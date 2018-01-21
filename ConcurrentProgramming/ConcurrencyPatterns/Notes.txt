@@ -1,0 +1,52 @@
+* Concurrency is not Parallelism 
+
+
+Concurrency - Working on single thread
+Parallelism - Working on tasks at the same time 
+
+* Concurrency Models - 
+
+Processor Threads - 
+
+Process has multiple threads ( Runs the application in context of a process)
+Threads share the same memory managed by the process 
+Mutex ( Mutually exculsive lock )
+
+Advantages .. 
+    Gives a lot of control
+    Performence can be improved .. ( maybe ... )
+
+Disadvantages ..
+    Reduce Perfoemce ( Overuseing constructs )
+    Memory Consumption 
+    Race Conditions ( Therads fighting for the same resource)
+
+
+Events - 
+
+Emitter - generates the event depending on an external stimuli 
+Recivers - Listens to messages sent by emitters creates events 
+EventObject - Sending messages from emitter to Reciver
+
+Advantags ..
+Memory Isolation
+Seperate Callee from caller 
+
+
+Disadvantages .. 
+Emitters dont know about recivers ( tracability )
+Synchronizing recivers
+
+
+CallBacks and Promises
+
+Callback - When the task is complete the callback func is startsd
+Promise - Return value. Returnns even before the callback finishes ( feel of the sychronous )
+
+advantages ..
+Memory Isolation
+Simplyfy Asynch Operations
+
+Disadvantages 
+Pyramid of Doom - Nested callbacks, Very hard to figure out when an error occurs 
+Handle Multiple Recivers 
