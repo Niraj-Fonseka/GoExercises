@@ -1,0 +1,13 @@
+Very lightweight
+scales up very well
+These are virtual, so goruntime takes care of how they get allocated to processor threads
+    - Making threadpools 
+
+Processor Thread Vs Proceesor Threads 
+- Processor Thread 1 MB 
+- Green Thread ( Virtual Thread ) 2KB
+
+
+GOMAXPROCS
+- Sets the max number of cpus can be execurting simultaneously and returns the previous setting
+

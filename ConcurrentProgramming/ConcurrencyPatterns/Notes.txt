@@ -50,3 +50,16 @@ Simplyfy Asynch Operations
 Disadvantages 
 Pyramid of Doom - Nested callbacks, Very hard to figure out when an error occurs 
 Handle Multiple Recivers 
+
+
+
+Concurrency In Golang : 
+
+Actor Model : 
+Cant directly minupulate threads 
+GoRotines 
+    - Not processor threads , virtual threads 
+    - Runs in go runtime 
+    - The stackspace for goroutines is very small 
+    -- Channel 
+        - Channels can be used to pass messages through goroutines
