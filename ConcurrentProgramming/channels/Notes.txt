@@ -1,0 +1,7 @@
+* Channels gives a way to isolate actors in an application
+
+* Creating a channel 
+    - ch := make(chan string ) //Specify we are making a channel and give the channel type
+
+* Channels always work asynchly
+
