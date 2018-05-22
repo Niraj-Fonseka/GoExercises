@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 type TextToSpeechResponse struct {
@@ -55,4 +57,9 @@ func main() {
 	n3, err := f.WriteString(responseTTS.AudioContent)
 	fmt.Printf("wrote %d bytes\n", n3)
 
+	cmd := exec.Command("play", "dest_audio_file.mp3")
+
+	if err := cmd.Run(); err != nil {
+		log.Fatal(err)
+	}
 }
