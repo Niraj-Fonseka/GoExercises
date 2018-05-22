@@ -28,7 +28,7 @@ func main() {
 		  "speakingRate": "1.00"
 		},
 		"input": {
-			"text": "Good Morning ! Today's weather is 65 degrees with a chance of thunderstorms. You have no meetings today. I've collected a list of breaking news while you were alseep. Have a nice day."
+			"text": "Hello ! How's it going"
 		},
 		"voice": {
 		  "languageCode": "en-US",
@@ -57,6 +57,10 @@ func main() {
 	n3, err := f.WriteString(responseTTS.AudioContent)
 	fmt.Printf("wrote %d bytes\n", n3)
 
+	cmdBase := exec.Command("base64", "audio.txt -d > dest_audio_file.mp3")
+	if err := cmdBase.Run(); err != nil {
+		log.Fatal(err)
+	}
 	cmd := exec.Command("play", "dest_audio_file.mp3")
 
 	if err := cmd.Run(); err != nil {
