@@ -13,6 +13,8 @@ type TextToSpeechResponse struct {
 	AudioContent string `json:"audioContent"`
 }
 
+//base64 source_base64_text_file -d > dest_audio_file
+
 func main() {
 	url := "https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=" + os.Getenv("KEY")
 	fmt.Println("URL:>", url)
@@ -24,7 +26,7 @@ func main() {
 		  "speakingRate": "1.00"
 		},
 		"input": {
-		  "text": "Hello Kayla , Nolan and Carol ! This is google du!"
+			"text": "Good Morning ! Today's weather is 65 degrees with a chance of thunderstorms. You have no meetings today. I've collected a list of breaking news while you were alseep. Have a nice day."
 		},
 		"voice": {
 		  "languageCode": "en-US",
