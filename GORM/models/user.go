@@ -1,8 +1,10 @@
 package models
 
 type User struct {
-	Api_key    string `gorm:"size:100;unique" json:"api_key"`
-	Api_secret string `gorm:"size:100" json:"api_secret"`
+	Api_key    string    `gorm:"size:100;unique" json:"api_key"`
+	Api_secret string    `gorm:"size:100" json:"api_secret"`
+	Address    []Address `gorm:"foreignkey:Api_key`
+
 	//Age int
 	// Name       string `gorm:"size:255"` // Default size for string is 255, reset it with this tag
 	// Num        int    `gorm:"AUTO_INCREMENT"`

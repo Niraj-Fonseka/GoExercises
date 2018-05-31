@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	db "valet-crud-api_go/app/models"
+	db "go_exercises/GORM/models"
 
 	"github.com/gin-gonic/gin"
 )
