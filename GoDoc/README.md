@@ -1,27 +1,46 @@
-PACKAGE DOCUMENTATION
-
-package packageDoc
-    import "/Users/mnf4691/Documents/go-workspace/src/go_exercises/GoDoc/packageDoc"
-
-    Comment for package Doc
-
-FUNCTIONS
-
-func Example()
-    This is a package-level example:
-
+use 'godoc cmd/go_exercises/GoDoc/example' for documentation on the go_exercises/GoDoc/example command 
 
 PACKAGE DOCUMENTATION
 
-package packageDoc
-    import "/Users/mnf4691/Documents/go-workspace/src/go_exercises/GoDoc/packageDoc"
+package example
+    import "go_exercises/GoDoc/example"
 
-    Comment for package Doc
+    This is the package comment, a top-level piece of documentation used to
+    explain things about the package (see json or exp/template) All godoc
+    comments are in this form with no whitespace between them and what they
+    accompany
 
-FUNCTIONS
+CONSTANTS
 
-func Example()
-    This is a package-level example: This is the second line of the package
-    level example
+const (
+    CONSTA = iota
+    CONSTB
+    CONSTC
+    CONSTD
+    ANOTHER = 7
+)
+    Some enum examples
+
+VARIABLES
+
+var Default float64 = 0.7
+    This is just a random variable
+
+TYPES
+
+type Example float64
+    Example is a float used for demonstration purposes
+
+func (e Example) Sqrt() Example
+    Returns the square root of an example
+
+type Example2 struct {
+    X Example
+    // contains filtered or unexported fields
+}
+    Example2 is also for demonstartion
+
+func NewExample(num int) *Example2
+    NewExample is used to get a ready-to-use Example2
 
 
