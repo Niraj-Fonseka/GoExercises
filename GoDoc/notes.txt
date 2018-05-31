@@ -1,0 +1,4 @@
+godoc -v /go_exercises/GoDoc/example 
+
+as of right now there's no markdown feature for godocs 
+so if we are not using a thirdparty library it would be hard to create docs and convert them to markdowns 
