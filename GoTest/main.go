@@ -1,9 +1,23 @@
 package main
 
-func main() {
-	a := App{}
-	// You need to set your Username and Password here
-	a.Initialize("DB_USERNAME", "DB_PASSWORD", "rest_api_example")
+import (
+	"net/http"
 
-	a.Run(":8080")
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	router := SetupRouter()
+	router.Run()
+}
+
+func SetupRouter() *gin.Engine {
+	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"hello": "world",
+		})
+	})
+
+	return router
 }
