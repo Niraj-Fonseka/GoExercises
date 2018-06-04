@@ -3,6 +3,7 @@ package main
 import (
 	"GoExercises/GoTest/DbApp/models"
 	"GoExercises/GoTest/DbApp/routers"
+	"fmt"
 	"log"
 	"os"
 
@@ -19,6 +20,13 @@ func main() {
 	// Register database
 	log.Println("Registering database..")
 	models.OpenDB(os.Getenv("DBCONN"), false) // Pass false for not logging dababase queries
+
+	fmt.Println("Creating TestDb")
+	models.TestDBInit()
+
+	fmt.Println("Deleting TestDb")
+	//models.TestDBFree(testDb)
+
 	defer models.CloseDB(models.DB)
 
 	log.SetOutput(gin.DefaultWriter)             // logs gin

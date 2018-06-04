@@ -3,7 +3,11 @@ package models
 //ALTER TABLE `service` ADD `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
 
 import (
+	"fmt"
 	"log"
+	"os"
+
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 	"github.com/jinzhu/gorm"
 )
@@ -42,6 +46,24 @@ func OpenDB(databaseConn string, mode bool) (err error) {
 	DB.DB().SetMaxOpenConns(100)
 
 	return nil
+}
+
+func TestDBInit() *gorm.DB {
+	test_db, err := gorm.Open("sqlite3", "./../gorm_test.db")
+	if err != nil {
+		fmt.Println("db err: ", err)
+	}
+	test_db.DB().SetMaxIdleConns(3)
+	test_db.LogMode(true)
+	DB = test_db
+	return DB
+}
+
+// Delete the database after running testing cases.
+func TestDBFree(test_db *gorm.DB) error {
+	test_db.Close()
+	err := os.Remove("./../gorm_test.db")
+	return err
 }
 
 //CloseDB closes db connection
