@@ -1,10 +1,17 @@
 package controllers
 
 import (
-	db "go_exercises/GORM/models"
+	db "GoExercises/GORM/models"
 
 	"github.com/gin-gonic/gin"
 )
+
+type UserController struct{}
+
+func (controller UserController) GETallUsers(c *gin.Context, userModel db.UserInterface) {
+	users, _ := userModel.GetAllUsers(true)
+	c.JSON(200, users)
+}
 
 func POSTuser(c *gin.Context) {
 	var createUser db.User
@@ -33,19 +40,19 @@ func POSTuser(c *gin.Context) {
 	}
 }
 
-func GETallUsers(c *gin.Context) {
-	users, err := db.GetAllUsers(true)
-	if err != nil {
-		c.JSON(500, gin.H{
-			"status": "get failed",
-			"err":    err,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"users": users,
-		})
-	}
-}
+// func GETallUsers(c *gin.Context) {
+// 	users, err := db.GetAllUsers(true)
+// 	if err != nil {
+// 		c.JSON(500, gin.H{
+// 			"status": "get failed",
+// 			"err":    err,
+// 		})
+// 	} else {
+// 		c.JSON(200, gin.H{
+// 			"users": users,
+// 		})
+// 	}
+// }
 
 // func DELETEUser(c *gin.Context) {
 

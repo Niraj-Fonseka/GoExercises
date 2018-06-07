@@ -1,5 +1,10 @@
 package models
 
+type UserData struct{}
+
+type UserInterface interface {
+	GetAllUsers(autoPreload bool) ([]User, error)
+}
 type User struct {
 	Api_key    string `gorm:"size:100;unique" json:"api_key"`
 	Api_secret string `gorm:"size:100" json:"api_secret"`
@@ -65,7 +70,7 @@ func GetUserByFeild(feildName string, searchValue string) (user *User, err error
 
 //GetAllUsers to get all data
 //keep autoPreload true if needs to fetch all related data else keep false
-func GetAllUsers(autoPreload bool) (users []User, err error) {
+func (u UserData) GetAllUsers(autoPreload bool) (users []User, err error) {
 	users = []User{}
 	if autoPreload == true {
 		err = DB.Set("gorm:auto_preload", true).Find(&users).Error

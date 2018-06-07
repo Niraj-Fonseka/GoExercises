@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go_exercises/GORM/models"
-	"go_exercises/GORM/routers"
+	"GoExercises/GORM/models"
+	"GoExercises/GORM/routers"
 	"log"
 	"os"
 

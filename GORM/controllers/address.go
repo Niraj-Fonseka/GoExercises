@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	db "go_exercises/GORM/models"
+	db "GoExercises/GORM/models"
 
 	"github.com/gin-gonic/gin"
 )
