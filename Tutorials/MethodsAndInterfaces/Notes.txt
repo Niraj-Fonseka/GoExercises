@@ -1,0 +1,1 @@
+* Need to know if the method is going to be on a name type or a pointer to a name type 
