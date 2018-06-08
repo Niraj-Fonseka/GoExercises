@@ -6,11 +6,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserController struct{}
+type UserController struct {
+	Users []db.User
+	Err   error
+}
 
-func (controller UserController) GETallUsers(c *gin.Context, userModel db.UserInterface) {
-	users, _ := userModel.GetAllUsers(true)
-	c.JSON(200, users)
+func (ctrl UserController) GETallUsers(c *gin.Context) {
+	users := ctrl.Users
+	err := ctrl.Err
+
+	if err != nil {
+		c.JSON(500, gin.H{
+			"Status": "error",
+			"Error":  err,
+		})
+		c.Abort()
+	} else {
+		c.JSON(200, gin.H{
+			"users": users,
+		})
+	}
 }
 
 func POSTuser(c *gin.Context) {

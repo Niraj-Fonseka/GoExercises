@@ -25,7 +25,7 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile) // logs with timestamp and file name and line number
 
 	router := gin.Default()
-	router.Use(gin.Logger())
+	//router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router = routers.InitRouters(router)
 

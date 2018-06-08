@@ -68,15 +68,3 @@ func TestPingRoute(t *testing.T) {
 	assert.Equal(t, 200, w.Code)
 	assert.Equal(t, "pong", w.Body.String())
 }
-
-/* HOW TO TEST CONTROLLER?
-func TestControllerGetAll(t *testing.T) {
-    gin.SetMode(gin.TestMode)
-    c := &gin.Context{}
-    c.Status(200)
-    repo := UserRepositoryMock{}
-    ctrl := UserController{}
-
-    ctrl.GetAll(c, repo)
-}
-*/

@@ -1,6 +1,8 @@
 package models
 
-type UserData struct{}
+type UserData struct {
+	Users []User
+}
 
 type UserInterface interface {
 	GetAllUsers(autoPreload bool) ([]User, error)
@@ -71,7 +73,8 @@ func GetUserByFeild(feildName string, searchValue string) (user *User, err error
 //GetAllUsers to get all data
 //keep autoPreload true if needs to fetch all related data else keep false
 func (u UserData) GetAllUsers(autoPreload bool) (users []User, err error) {
-	users = []User{}
+	//users = []User{}
+	users = u.Users
 	if autoPreload == true {
 		err = DB.Set("gorm:auto_preload", true).Find(&users).Error
 	} else {

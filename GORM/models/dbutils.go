@@ -8,6 +8,13 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+type DataAccessLayer interface {
+	GetAllUsers(autoPreload bool) ([]User, error)
+}
+
+// type SetUpDB interface {
+// 	OpenDB(databaseConn string, mode)
+// }
 //DB object to be used
 var DB *gorm.DB
 
@@ -27,9 +34,9 @@ func OpenDB(databaseConn string, mode bool) (err error) {
 	DB.LogMode(mode)
 
 	// updating schema , add databse models here to autogenerate schema
-	err = DB.AutoMigrate(&User{}, &Address{}).Error
+	err = DB.AutoMigrate(&User{}).Error
 
-	DB.Model(&Address{}).AddForeignKey("api_key", "user(api_key)", "CASCADE", "CASCADE")
+	//DB.Model(&Address{}).AddForeignKey("api_key", "user(api_key)", "CASCADE", "CASCADE")
 
 	if err != nil {
 		log.Panicln("Error in Migrating tables", err.Error())
