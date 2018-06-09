@@ -37,7 +37,7 @@ func InitAuthentication() *jwt.GinJWTMiddleware {
 	authMiddleware := &jwt.GinJWTMiddleware{
 		Realm:         "test zone",
 		Key:           []byte("secret key"),
-		Timeout:       20 * time.Second,
+		Timeout:       10 * time.Hour,
 		MaxRefresh:    time.Hour,
 		Authenticator: Authenticator,
 		Authorizator:  Authorizator,

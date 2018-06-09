@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"valet-crud-api_go/app/controllers"
+	"GoExercises/go_api_template/app/controllers"
 
 	jwt "github.com/appleboy/gin-jwt"
 

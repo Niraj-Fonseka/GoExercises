@@ -1,12 +1,12 @@
 package main
 
 import (
+	"GoExercises/go_api_template/app/auth"
+	"GoExercises/go_api_template/app/models"
+	"GoExercises/go_api_template/app/routers"
 	"fmt"
 	"log"
 	"os"
-	"valet-crud-api_go/app/auth"
-	"valet-crud-api_go/app/models"
-	"valet-crud-api_go/app/routers"
 	// "strconv"
 	_ "github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/mysql"
 	"github.com/gin-contrib/cors"
@@ -32,7 +32,7 @@ func main() {
 
 	// Add Database connection conn for CloundMySql = "username:password123@(cloudsqlinstance)/dbname?charset=utf8&parseTime=True&loc=UTC"
 
-	models.OpenDB(os.Getenv("dbconn"), false) // Pass false for not logging dababase queries
+	models.OpenDB(os.Getenv("DBCON"), false) // Pass false for not logging dababase queries
 	defer models.CloseDB(models.DB)
 
 	// Disable Console Color, you don't need console color when writing the logs to file.
