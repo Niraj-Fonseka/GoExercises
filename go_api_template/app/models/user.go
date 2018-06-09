@@ -1,25 +1,14 @@
 package models
 
-import (
-	"time"
-
-	"github.com/jinzhu/gorm"
-)
-
 //User struct
 type User struct {
-	gorm.Model //Adds fields `ID`, `CreatedAt`, `UpdatedAt`, `DeletedAt` in the stuct as well as in the database table, ID is the primary key and auto incremented
-	Birthday   time.Time
-	Age        int
-	Name       string `gorm:"size:255"` // Default size for string is 255, reset it with this tag
-	Num        int    `gorm:"AUTO_INCREMENT"`
+	Api_key    string `gorm:"size:100;unique" json:"api_key"`
+	Api_secret string `gorm:"size:100" json:"api_secret"`
+	//Age int
+	// Name       string `gorm:"size:255"` // Default size for string is 255, reset it with this tag
+	// Num        int    `gorm:"AUTO_INCREMENT"`
+	// IgnoreMe   int    `gorm:"-"` // Ignore this field
 
-	Emails []Email `gorm:"foreignkey:UserID"` // One-To-Many relationship (has many - use Email's UserID as foreign key)
-
-	Address Address `gorm:"foreignkey:UserID"` // One-To-One relationship (belongs to - use UserID as foreign key)
-
-	IgnoreMe int    `gorm:"-"`                       // Ignore this field
-	Roles    []Role `  gorm:"many2many:user_roles;"` // Many-To-Many relationship, 'user_roles' is join table
 }
 
 //TableName Creates table with give name
@@ -28,12 +17,12 @@ func (User) TableName() string {
 }
 
 //CreateUser creates data
-func CreateUser(user *User) (id int, err error) {
+func CreateUser(user *User) (id string, err error) {
 
 	if err = DB.Create(user).Error; err == nil {
-		return int(user.ID), nil
+		return string(user.Api_key), nil
 	}
-	return 0, err
+	return "", err
 }
 
 //ModifyUser modifies data
@@ -47,15 +36,31 @@ func ModifyUser(user *User) (err error) {
 
 //GetUsertByID gets User by id
 //keep autoPreload true if needs to fetch all related data else keep false
-func GetUsertByID(id int, autoPreload bool) (user *User, err error) {
+// func GetUsertByID(id int, autoPreload bool) (user *User, err error) {
+// 	user = &User{}
+// 	if autoPreload == true {
+// 		if err = DB.Set("gorm:auto_preload", true).First(user, id).Error; err != nil {
+
+// 			return nil, err
+// 		}
+// 	} else {
+// 		if err = DB.First(user, id).Error; err != nil {
+
+// 			return nil, err
+// 		}
+// 	}
+// 	return user, nil
+// }
+
+func GetUserByKey(api_key string, autoPreload bool) (user *User, err error) {
 	user = &User{}
 	if autoPreload == true {
-		if err = DB.Set("gorm:auto_preload", true).First(user, id).Error; err != nil {
+		if err = DB.Set("gorm:auto_preload", true).First(user, api_key).Error; err != nil {
 
 			return nil, err
 		}
 	} else {
-		if err = DB.First(user, id).Error; err != nil {
+		if err = DB.First(user, api_key).Error; err != nil {
 
 			return nil, err
 		}

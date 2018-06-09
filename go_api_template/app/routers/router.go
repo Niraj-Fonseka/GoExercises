@@ -16,8 +16,13 @@ func InitRouters(router *gin.Engine, auth *jwt.GinJWTMiddleware) *gin.Engine {
 	protected := router.Group("/protected")
 	protected.Use(auth.MiddlewareFunc())
 	{
-		protected.GET("/protectedHello", controllers.GetProtectedHealth)
+		protected.GET("/protectedHealth", controllers.GetProtectedHealth)
 	}
 
+	router.GET("/users", controllers.GETallUsers)
+
+	userGroup := router.Group("/user")
+	userGroup.POST("/", controllers.POSTuser)
+	userGroup.GET("/:userID", controllers.GETUserByApiKey)
 	return router
 }

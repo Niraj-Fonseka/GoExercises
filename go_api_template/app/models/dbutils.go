@@ -25,7 +25,10 @@ func OpenDB(databaseConn string, mode bool) (err error) {
 	DB.LogMode(mode)
 
 	// updating schema , add databse models here to autogenerate schema
-	err = DB.AutoMigrate(&User{}, &Role{}, &Email{}, Address{}).Error
+	err = DB.AutoMigrate(&User{}, &UserRoles{}).Error
+
+	DB.Model(&UserRoles{}).AddForeignKey("api_key", "user(api_key)", "CASCADE", "CASCADE")
+
 	if err != nil {
 		log.Panicln("Error in Migrating tables", err.Error())
 
