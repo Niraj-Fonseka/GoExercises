@@ -16,8 +16,36 @@ func (UserRoles) TableName() string {
 	return "userrole"
 }
 
-func GetUserRoleById(Api_key string, autoPreload bool) (user *User, err error) {
-	user = &User{}
+//GetAllUsers to get all data
+//keep autoPreload true if needs to fetch all related data else keep false
+func GetAllUserRoles(autoPreload bool) (userRoles []UserRoles, err error) {
+	userRoles = []UserRoles{}
+	if autoPreload == true {
+		err = DB.Set("gorm:auto_preload", true).Find(&userRoles).Error
+	} else {
+		err = DB.Find(&userRoles).Error
+	}
+
+	if err == nil {
+		return userRoles, nil
+	}
+	return nil, err
+}
+
+// //GetUserByFeild : can change the method according to requierment
+// func GetUserByFeild(feildName string, searchValue string) (user *User, err error) {
+// 	user = &UserRoles{}
+// 	// use DB.Unscoped() insted of DB to find soft deleted entries
+// 	if err = DB.Where(feildName+" = ?", searchValue).First(user).Error; err != nil {
+
+// 		return nil, err
+// 	}
+
+// 	return user, nil
+// }
+
+func GetUserRoleById(Api_key string, autoPreload bool) (user *UserRoles, err error) {
+	user = &UserRoles{}
 	if autoPreload == true {
 		if err = DB.Set("gorm:auto_preload", true).First(user, Api_key).Error; err != nil {
 

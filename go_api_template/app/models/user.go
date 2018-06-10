@@ -34,24 +34,6 @@ func ModifyUser(user *User) (err error) {
 	return err
 }
 
-//GetUsertByID gets User by id
-//keep autoPreload true if needs to fetch all related data else keep false
-// func GetUsertByID(id int, autoPreload bool) (user *User, err error) {
-// 	user = &User{}
-// 	if autoPreload == true {
-// 		if err = DB.Set("gorm:auto_preload", true).First(user, id).Error; err != nil {
-
-// 			return nil, err
-// 		}
-// 	} else {
-// 		if err = DB.First(user, id).Error; err != nil {
-
-// 			return nil, err
-// 		}
-// 	}
-// 	return user, nil
-// }
-
 func GetUserByKey(api_key string, autoPreload bool) (user *User, err error) {
 	user = &User{}
 	if autoPreload == true {
