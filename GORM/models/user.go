@@ -4,17 +4,13 @@ type UserData struct {
 	Users []User
 }
 
+//Testing out an interface
 type UserInterface interface {
 	GetAllUsers(autoPreload bool) ([]User, error)
 }
 type User struct {
 	Api_key    string `gorm:"size:100;unique" json:"api_key"`
 	Api_secret string `gorm:"size:100" json:"api_secret"`
-	//Age int
-	// Name       string `gorm:"size:255"` // Default size for string is 255, reset it with this tag
-	// Num        int    `gorm:"AUTO_INCREMENT"`
-	// IgnoreMe   int    `gorm:"-"` // Ignore this field
-
 }
 
 //TableName Creates table with give name
@@ -23,12 +19,29 @@ func (User) TableName() string {
 }
 
 //CreateUser creates data
-func CreateUser(user *User) (id string, err error) {
+func (u UserData) CreateUser(user *User) (id string, err error) {
 
 	if err = DB.Create(user).Error; err == nil {
 		return string(user.Api_key), nil
 	}
 	return "", err
+}
+
+//GetAllUsers to get all data
+//keep autoPreload true if needs to fetch all related data else keep false
+func (u UserData) GetAllUsers(autoPreload bool) (users []User, err error) {
+	//users = []User{}
+	users = u.Users
+	if autoPreload == true {
+		err = DB.Set("gorm:auto_preload", true).Find(&users).Error
+	} else {
+		err = DB.Find(&users).Error
+	}
+
+	if err == nil {
+		return users, nil
+	}
+	return nil, err
 }
 
 //ModifyUser modifies data
@@ -68,23 +81,6 @@ func GetUserByFeild(feildName string, searchValue string) (user *User, err error
 	}
 
 	return user, nil
-}
-
-//GetAllUsers to get all data
-//keep autoPreload true if needs to fetch all related data else keep false
-func (u UserData) GetAllUsers(autoPreload bool) (users []User, err error) {
-	//users = []User{}
-	users = u.Users
-	if autoPreload == true {
-		err = DB.Set("gorm:auto_preload", true).Find(&users).Error
-	} else {
-		err = DB.Find(&users).Error
-	}
-
-	if err == nil {
-		return users, nil
-	}
-	return nil, err
 }
 
 // //DeleteUser deletes data from database

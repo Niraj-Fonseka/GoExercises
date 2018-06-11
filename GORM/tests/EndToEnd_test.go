@@ -1,8 +1,7 @@
-package routers
+package tests
 
 import (
 	controllers "GoExercises/GORM/controllers"
-	db "GoExercises/GORM/models"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -14,16 +13,15 @@ func TestGettingAllUsers(t *testing.T) {
 	//ts := httptest.NewServer(InitRouters(gin.Default()))
 	gin.SetMode(gin.TestMode)
 
-	users, err := db.UserDataMock{}.GetAllUsersSuccess()
+	users, err := UserDataMock{}.GetAllUsersSuccess()
 
 	r := gin.New()
-	r.GET("/admin/users", controllers.UserController{users, err}.GETallUsers)
+	r.GET("/admin/users", controllers.UserController{users, "", err}.GETallUsers)
 	req, _ := http.NewRequest("GET", "/admin/users", nil)
 	resp := httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
 
 	if resp.Code != http.StatusOK {
-		// If this fails, it's because httprouter needs to be updated to at least f78f58a0db
 		t.Errorf("Status code should be %v, was %d\n", http.StatusOK, resp.Code)
 	}
 }
@@ -34,15 +32,30 @@ func TestGettingAllUsersBadRequest(t *testing.T) {
 
 	r := gin.New()
 
-	users, err := db.UserDataMock{}.GetAllUsersFail()
+	users, err := UserDataMock{}.GetAllUsersFail()
 
-	r.GET("/admin/users", controllers.UserController{users, err}.GETallUsers)
+	r.GET("/admin/users", controllers.UserController{users, "", err}.GETallUsers)
 	req, _ := http.NewRequest("GET", "/admin/users", nil)
 	resp := httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
 
 	if resp.Code != 500 {
-		// If this fails, it's because httprouter needs to be updated to at least f78f58a0db
+		t.Errorf("Status code should be %v, was %d\n", http.StatusOK, resp.Code)
+	}
+}
+
+func TestCreatingAUserFail(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	r := gin.New()
+
+	apiKey, err := UserDataMock{}.POSTUser()
+
+	r.POST("/admin/users", controllers.UserController{nil, apiKey, err}.POSTuser)
+	req, _ := http.NewRequest("POST", "/admin/users", nil)
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	if resp.Code != 500 {
 		t.Errorf("Status code should be %v, was %d\n", http.StatusOK, resp.Code)
 	}
 }

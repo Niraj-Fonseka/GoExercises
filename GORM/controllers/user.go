@@ -7,8 +7,9 @@ import (
 )
 
 type UserController struct {
-	Users []db.User
-	Err   error
+	Users             []db.User
+	UserCreatedAPIKey string
+	Err               error
 }
 
 func (ctrl UserController) GETallUsers(c *gin.Context) {
@@ -28,19 +29,11 @@ func (ctrl UserController) GETallUsers(c *gin.Context) {
 	}
 }
 
-func POSTuser(c *gin.Context) {
-	var createUser db.User
-	err := c.BindJSON(&createUser)
+func (ctrl UserController) POSTuser(c *gin.Context) {
 
-	if err != nil {
-		c.JSON(500, gin.H{
-			"status": "Possible Invalid JSON Body",
-			"err":    err,
-		})
-		c.Abort()
-	}
+	err := ctrl.Err
+	api_key := ctrl.UserCreatedAPIKey
 
-	api_key, err := db.CreateUser(&createUser)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"status": "post failed",
