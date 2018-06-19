@@ -33,14 +33,14 @@ func main() {
 	}
 
 	// Print all the subscriptions in the project.
-	fmt.Println("Listing all subscriptions from the project:")
-	subs, err := list(client)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, sub := range subs {
-		fmt.Println(sub)
-	}
+	// fmt.Println("Listing all subscriptions from the project:")
+	// subs, err := list(client)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// for _, sub := range subs {
+	// 	fmt.Println(sub)
+	// }
 
 	t := createTopicIfNotExists(client)
 
@@ -63,6 +63,7 @@ func main() {
 
 func list(client *pubsub.Client) ([]*pubsub.Subscription, error) {
 	ctx := context.Background()
+	fmt.Println("Listing pubsub subscriptions")
 	// [START pubsub_list_subscriptions]
 	var subs []*pubsub.Subscription
 	it := client.Subscriptions(ctx)
@@ -223,6 +224,8 @@ func createTopicIfNotExists(c *pubsub.Client) *pubsub.Topic {
 
 	const topic = "example-topic"
 	// Create a topic to subscribe to.
+
+	fmt.Println("Creating Topic")
 	t := c.Topic(topic)
 	ok, err := t.Exists(ctx)
 	if err != nil {
