@@ -1,0 +1,11 @@
+[Unit]
+Description=main micro-service
+
+[Service]
+Type=notify
+ExecStart=main
+WatchdogSec=30s
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
