@@ -37,6 +37,7 @@ func OpenDB(databaseConn string, mode bool) (err error) {
 	err = DB.AutoMigrate(&User{}).Error
 
 	if err != nil {
+
 		log.Panicln("Error in Migrating tables", err.Error())
 
 		return err
