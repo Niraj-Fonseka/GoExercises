@@ -1,7 +1,8 @@
 FROM golang
 
-ADD . /go/src/GoExercises/Docker
+ADD . $GOPATH/src/GoExercises/Docker
 
-RUN cd /go/src/GoExercises/Docker; go build -o dockerApp
+WORKDIR $GOPATH/src/GoExercises/Docker
 
-ENTRYPOINT [ "./dockerApp" ]
+RUN cd  $GOPATH/src/GoExercises/Docker; go build -o app
+ENTRYPOINT [ "./app" ]
