@@ -1,3 +1,8 @@
+# Testing Simple docker application with minikube
+
+https://kubernetes.io/docs/tutorials/hello-minikube/
+
+
 ```
 docker build -t dockerfonseka/dockergoapp .
 ```
@@ -32,4 +37,29 @@ kubectl expose deployment dockergoapp --type=LoadBalancer
 
 ```
 minikube service dockergoapp
+```
+
+
+### Updating a new image 
+
+```
+Update the code and make sure it runs 
+```
+
+#### Build the new image
+
+```
+docker build -t dockerfonseka/dockergoapp:v2 .
+```
+
+#### Push to docker hub 
+
+```
+docker push dockerfonseka/dockergoapp
+```
+
+#### Update the kubernates image with the new image 
+
+```
+kubectl set image deployment/dockergoapp dockergoapp=dockerfonseka/dockergoapp:v2
 ```
