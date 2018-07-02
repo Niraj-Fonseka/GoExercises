@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 //In a more complex blockchain you will have to do more complex computations befoer adding a block - Proof of work
@@ -18,5 +19,10 @@ func main() {
 		fmt.Printf("Data : %s \n", block.Data)
 		fmt.Printf("Hash : %x\n ", block.Hash)
 		fmt.Println()
+
+		pow := NewProofOfWork(block)
+		fmt.Printf("PoW : %s \n", strconv.FormatBool(pow.Validate()))
+		fmt.Println()
 	}
+
 }
