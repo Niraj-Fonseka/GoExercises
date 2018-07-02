@@ -105,7 +105,6 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 }
 
 //Validating proof of works
-
 func (pow *ProofOfWork) Validate() bool {
 	var hashInt big.Int
 
