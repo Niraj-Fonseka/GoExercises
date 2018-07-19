@@ -1,9 +1,10 @@
 package main
 
-import (
-	"fmt"
-)
+import "github.com/gin-gonic/gin"
 
 func main() {
-	fmt.Println("Running the Channel Orchestration program")
+	r := gin.Default()
+	r.GET("/ping", PingTest)
+	r.GET("/health", HealthRequest)
+	r.Run() // listen and serve on 0.0.0.0:8080
 }
