@@ -1,14 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"os"
 
 	"github.com/shomali11/slacker"
 )
 
 func main() {
-	bot := slacker.NewClient(os.Getenv("SLACKTOKEN"))
+	bot := slacker.NewClient("Token Here")
+
+	fmt.Println(bot)
+
+	bot.Help(func(request slacker.Request, response slacker.ResponseWriter) {
+		response.Reply("Your own help function...")
+	})
 
 	bot.Command("ping", "Ping!", func(request slacker.Request, response slacker.ResponseWriter) {
 		response.Reply("pong")
