@@ -102,15 +102,15 @@ func (d *Dispatcher) dispatch() {
 
 func requestHandler(w http.ResponseWriter, r *http.Request, jobQueue chan Job) {
 	// Make sure we can only be called with an HTTP POST request.
-	if r.Method != "POST" {
-		w.Header().Set("Allow", "POST")
+	if r.Method != "GET" {
+		w.Header().Set("Allow", "GET")
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
 
 	// Parse the delay.
-	delay, err := time.ParseDuration(r.FormValue("delay"))
-	name := r.FormValue("name")
+	delay, err := time.ParseDuration("5s")
+	name := "job1"
 	fmt.Println(name)
 	if err != nil {
 		fmt.Println(delay)
