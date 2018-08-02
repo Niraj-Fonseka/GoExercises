@@ -32,9 +32,9 @@ type MapForMutlipleReturns struct {
 
 func RunGoWaitGroup() {
 	urls := []string{
-		"http://slowwly.robertomurray.co.uk/delay/10000/url/http://www.mocky.io/v2/5b628ffb3000005a0064ffea",
-		"http://slowwly.robertomurray.co.uk/delay/2000/url/ http://www.mocky.io/v2/5b629066300000620964ffef",
-		"http://slowwly.robertomurray.co.uk/delay/2000/url/http://www.mocky.io/v2/5b629089300000710064fff1",
+		"http://slowwly.robertomurray.co.uk/delay/5000/url/http://www.mocky.io/v2/5b629f8d300000490065002b",
+		"http://slowwly.robertomurray.co.uk/delay/2000/url/http://www.mocky.io/v2/5b629fc4300000620065002c",
+		"http://slowwly.robertomurray.co.uk/delay/500/url/http://www.mocky.io/v2/5b62a00d300000620065002f",
 	}
 	jsonResponses := make(chan Running)
 
@@ -44,6 +44,7 @@ func RunGoWaitGroup() {
 
 	for key, url := range urls {
 		go func(url string) {
+			fmt.Println("Routine for : ", url)
 			defer wg.Done()
 			res, err := http.Get(url)
 			if err != nil {
@@ -75,12 +76,14 @@ func RunGoWaitGroup() {
 			fmt.Println(index)
 			fmt.Println(response.Response)
 			list.counters[index] = response.Response
-
+			index++
 			list.countersLock.Unlock()
+
 		}
 	}()
 
 	go func() {
+		fmt.Println("Keep checking struture")
 		for index := 0; index < 3; index++ {
 			fmt.Println(list.counters[index])
 		}
