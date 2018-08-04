@@ -37,6 +37,8 @@ Requirements
 - First 20 bits of hash must be 0s 
 - In bitcoin the requirement is adjusted from time to time. A block must be generated every 10 minutes.
 
+- The target is the upper boundry of a range. if the hash is lower than the target its a valid. 
+
 
 #### Database 
 
