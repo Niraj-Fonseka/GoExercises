@@ -47,7 +47,7 @@ func githubStatus() (string, error) {
 	defer log.Println("Request to GitHub API Complete")
 
 	log.Println("Making that db call")
-	time.Sleep(1 * time.Second)
+	time.Sleep(5 * time.Second)
 
 	resp, err := http.Get("https://status.github.com/api/status.json")
 	if err != nil {
