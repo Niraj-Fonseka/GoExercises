@@ -1,5 +1,10 @@
 package models
 
+import (
+	"fmt"
+	"time"
+)
+
 type User struct {
 	ID       int    `gorm:"primary_key" json:"id"`
 	Email    string `gorm:"not null;unique;size:100"" json:"email"`
@@ -49,6 +54,9 @@ func GetUserByID(un string, autoPreload bool) (user *User, err error) {
 
 func GetAllUsers(autoPreload bool) (users []User, err error) {
 	users = []User{}
+	fmt.Println("Doing the DB Call for getting all users")
+	time.Sleep(5 * time.Second)
+
 	if autoPreload == true {
 		err = DB.Set("gorm:auto_preload", true).Find(&users).Error
 	} else {

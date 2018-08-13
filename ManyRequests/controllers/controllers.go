@@ -2,17 +2,72 @@ package controllers
 
 import (
 	db "GoExercises/ManyRequests/models"
-	"net/http"
+	"encoding/json"
+	"fmt"
+	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/singleflight"
 )
 
 func GetHealth(c *gin.Context) {
-	c.JSON(http.StatusOK, "Health Status : OK !")
+
+	var requestGroup singleflight.Group
+
+	v, err, shared := requestGroup.Do("health", func() (interface{}, error) {
+
+		//fmt.Println(GetGoID())
+
+		go func() {
+			time.Sleep(30 * time.Second)
+			log.Println("Deleting \"health\" key")
+			requestGroup.Forget("health")
+		}()
+
+		return db.GetHealth()
+	})
+
+	status := v.(string)
+	fmt.Println(err)
+	fmt.Println("Value :  ", v)
+	log.Printf("/getallusers handler requst: status %q, shared result %t", status, shared)
+	log.Printf("Value : ", v)
+	fmt.Printf("Status is : %s \n", status)
+
+	c.JSON(200, v)
+
 }
 
 func GetAllUsers(c *gin.Context) {
-	users, err := db.GetAllUsers(false)
+	var requestGroup singleflight.Group
+
+	v, err, shared := requestGroup.Do("allusers", func() (interface{}, error) {
+
+		//fmt.Println(GetGoID())
+
+		go func() {
+			time.Sleep(30 * time.Second)
+			log.Println("Deleting \"allusers\" key")
+			requestGroup.Forget("allusers")
+		}()
+
+		users, err := db.GetAllUsers(false)
+
+		value, err := json.Marshal(users)
+
+		return string(value), err
+	})
+
+	status := v.(string)
+	fmt.Println(err)
+	fmt.Println("Value :  ", v)
+	log.Printf("/getallusers handler requst: status %q, shared result %t", status, shared)
+	log.Printf("Value :")
+	fmt.Printf("Status is : %s \n", status)
+
+	//val, err := db.GetAllUsers(false)
+
 	if err != nil {
 		c.JSON(500, gin.H{
 			"status": "get failed",
@@ -20,9 +75,10 @@ func GetAllUsers(c *gin.Context) {
 		})
 	} else {
 		c.JSON(200, gin.H{
-			"users": users,
+			"users": v,
 		})
 	}
+
 }
 
 func AddUser(c *gin.Context) {

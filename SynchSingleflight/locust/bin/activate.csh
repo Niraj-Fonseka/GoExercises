@@ -7,7 +7,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/nirajfonseka/Documents/go-workspace/src/GoExercises/SynchSingleflight/locust"
+setenv VIRTUAL_ENV "/Users/mnf4691/Documents/go-workspace/src/GoExercises/ManyRequests/locust"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

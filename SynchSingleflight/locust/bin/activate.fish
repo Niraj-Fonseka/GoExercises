@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/nirajfonseka/Documents/go-workspace/src/GoExercises/SynchSingleflight/locust"
+set -gx VIRTUAL_ENV "/Users/mnf4691/Documents/go-workspace/src/GoExercises/ManyRequests/locust"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

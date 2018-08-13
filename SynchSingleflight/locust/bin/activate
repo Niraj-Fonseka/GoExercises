@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/nirajfonseka/Documents/go-workspace/src/GoExercises/SynchSingleflight/locust"
+VIRTUAL_ENV="/Users/mnf4691/Documents/go-workspace/src/GoExercises/ManyRequests/locust"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

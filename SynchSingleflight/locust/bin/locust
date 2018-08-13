@@ -1,4 +1,4 @@
-#!/Users/nirajfonseka/Documents/go-workspace/src/GoExercises/SynchSingleflight/locust/bin/python2.7
+#!/Users/mnf4691/Documents/go-workspace/src/GoExercises/ManyRequests/locust/bin/python
 
 # -*- coding: utf-8 -*-
 import re
