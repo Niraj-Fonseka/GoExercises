@@ -11,6 +11,10 @@ import (
 	"golang.org/x/sync/singleflight"
 )
 
+type Controller struct {
+	RGroup *singleflight.Group
+}
+
 func GetHealth(c *gin.Context) {
 
 	var requestGroup singleflight.Group
@@ -39,17 +43,16 @@ func GetHealth(c *gin.Context) {
 
 }
 
-func GetAllUsers(c *gin.Context) {
-	var requestGroup singleflight.Group
+func (ctrl Controller) GetAllUsers(c *gin.Context) {
 
-	v, err, shared := requestGroup.Do("allusers", func() (interface{}, error) {
+	v, err, shared := ctrl.RGroup.Do("allusers", func() (interface{}, error) {
 
 		//fmt.Println(GetGoID())
 
 		go func() {
 			time.Sleep(30 * time.Second)
 			log.Println("Deleting \"allusers\" key")
-			requestGroup.Forget("allusers")
+			ctrl.RGroup.Forget("allusers")
 		}()
 
 		users, err := db.GetAllUsers(false)

@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/singleflight"
 )
 
 //func GetGoID() int32
@@ -15,6 +16,7 @@ import (
 func main() {
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowHeaders = append(corsConfig.AllowHeaders, "Authorization")
+	var requestGroup singleflight.Group
 
 	//Opening the database
 	models.OpenDB(os.Getenv("databaseConn"), false) // Pass false for not logging dababase queries
@@ -28,7 +30,7 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	//auth := auth.InitAuthentication()
-	router = routes.InitRouters(router)
+	router = routes.InitRouters(router, &requestGroup)
 
 	//log.Println("AppName is: ", config.Get("server.appName").(string))
 
