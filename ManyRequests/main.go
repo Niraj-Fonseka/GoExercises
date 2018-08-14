@@ -3,6 +3,7 @@ package main
 import (
 	"GoExercises/ManyRequests/models"
 	"GoExercises/ManyRequests/routes"
+	"fmt"
 	"log"
 	"os"
 
@@ -35,5 +36,11 @@ func main() {
 	//log.Println("AppName is: ", config.Get("server.appName").(string))
 
 	//router.Run(config.Get("server.httpport").(string))
+
+	fmt.Println("Get All users count at init ", models.GetAllUsersCount)
+
 	router.Run(":8000")
+
+	fmt.Println("Get All users count when program quits ", models.GetAllUsersCount)
+
 }

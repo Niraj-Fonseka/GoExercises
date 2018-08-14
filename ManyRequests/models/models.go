@@ -12,6 +12,7 @@ import (
 
 //DB object to be used
 var DB *gorm.DB
+var GetAllUsersCount int64
 
 //OpenDB connects database with settings
 func OpenDB(databaseConn string, mode bool) (err error) {

@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -16,6 +17,8 @@ type User struct {
 func (User) TableName() string {
 	return "users"
 }
+
+var mu sync.Mutex
 
 func CreateUser(user *User) (un string, err error) {
 
@@ -54,6 +57,10 @@ func GetUserByID(un string, autoPreload bool) (user *User, err error) {
 
 func GetAllUsers(autoPreload bool) (users []User, err error) {
 	users = []User{}
+
+	mu.Lock()
+	GetAllUsersCount++
+	mu.Unlock()
 	fmt.Println("Doing the DB Call for getting all users")
 	time.Sleep(5 * time.Second)
 
