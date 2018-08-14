@@ -45,14 +45,16 @@ func GetHealth(c *gin.Context) {
 
 func (ctrl Controller) GetAllUsers(c *gin.Context) {
 
-	v, err, shared := ctrl.RGroup.Do("allusers", func() (interface{}, error) {
+	URL := c.Request.URL.String()
+	fmt.Printf("URL : %s \n", URL)
+	v, err, _ := ctrl.RGroup.Do(URL, func() (interface{}, error) {
 
 		//fmt.Println(GetGoID())
 
 		go func() {
 			time.Sleep(30 * time.Second)
-			log.Println("Deleting \"allusers\" key")
-			ctrl.RGroup.Forget("allusers")
+			log.Println("Deleting key ", URL)
+			ctrl.RGroup.Forget(URL)
 		}()
 
 		users, err := db.GetAllUsers(false)
@@ -62,12 +64,12 @@ func (ctrl Controller) GetAllUsers(c *gin.Context) {
 		return string(value), err
 	})
 
-	status := v.(string)
-	fmt.Println(err)
-	fmt.Println("Value :  ", v)
-	log.Printf("/getallusers handler requst: status %q, shared result %t", status, shared)
-	log.Printf("Value :")
-	fmt.Printf("Status is : %s \n", status)
+	//status := v.(string)
+	//fmt.Println(err)
+	// fmt.Println("Value :  ", v)
+	// log.Printf("/getallusers handler requst: status %q, shared result %t", status, shared)
+	// log.Printf("Value :")
+	// fmt.Printf("Status is : %s \n", status)
 
 	//val, err := db.GetAllUsers(false)
 
