@@ -2,22 +2,23 @@ package controllers
 
 import (
 	db "GoExercises/ManyRequests/models"
+	multi "GoExercises/ManyRequests/multirequest"
+
 	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/sync/singleflight"
 )
 
 type Controller struct {
-	RGroup *singleflight.Group
+	RGroup *multi.Group
 }
 
 func GetHealth(c *gin.Context) {
 
-	var requestGroup singleflight.Group
+	var requestGroup multi.Group
 
 	v, err, shared := requestGroup.Do("health", func() (interface{}, error) {
 
