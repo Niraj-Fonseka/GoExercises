@@ -25,8 +25,6 @@ func InitRouters(router *gin.Engine, auth *jwt.GinJWTMiddleware) *gin.Engine {
 	userGroup.POST("/", controllers.POSTuser)
 	userGroup.GET("/:userID", controllers.GETUserByApiKey)
 
-	router.GET("/userRoles", controllers.GETallUserRoles)
-	userRoleGroup := router.Group("/userRole")
-	userRoleGroup.POST("/", controllers.POSTuserRole)
+	
 	return router
 }
