@@ -6,11 +6,16 @@
   packages = [
     "compute/metadata",
     "datastore",
+    "iam",
     "internal",
     "internal/atomiccache",
     "internal/fields",
+    "internal/optional",
     "internal/trace",
-    "internal/version"
+    "internal/version",
+    "pubsub",
+    "pubsub/apiv1",
+    "pubsub/internal/distribution"
   ]
   revision = "29f476ffa9c4cd4fd14336b6043090ac1ad76733"
   version = "v0.21.0"
@@ -91,6 +96,7 @@
     "ptypes",
     "ptypes/any",
     "ptypes/duration",
+    "ptypes/empty",
     "ptypes/struct",
     "ptypes/timestamp",
     "ptypes/wrappers"
@@ -103,6 +109,51 @@
   name = "github.com/golang/snappy"
   packages = ["."]
   revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonum/blas"
+  packages = [
+    ".",
+    "blas64",
+    "native",
+    "native/internal/math32"
+  ]
+  revision = "e7c5890b24cf6f3bb173f76e1bd71e80e887e3f9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonum/floats"
+  packages = ["."]
+  revision = "7de1f4ea7ab57890bfd427af68c7994cd67975d4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonum/internal"
+  packages = [
+    "asm/f32",
+    "asm/f64"
+  ]
+  revision = "fda53f8d25717c07e2dac25758075a182bd74235"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonum/lapack"
+  packages = [
+    ".",
+    "lapack64",
+    "native"
+  ]
+  revision = "f0b8b25edeceafb3a2752941c7bf0cda962df112"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gonum/matrix"
+  packages = [
+    ".",
+    "mat64"
+  ]
+  revision = "a41cc49d4c29f7451775f4379a5cc6ec6239dfab"
 
 [[projects]]
   name = "github.com/googleapis/gax-go"
@@ -123,6 +174,12 @@
   version = "v1.6.2"
 
 [[projects]]
+  name = "github.com/gorilla/websocket"
+  packages = ["."]
+  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+  version = "v1.4.0"
+
+[[projects]]
   name = "github.com/jinzhu/gorm"
   packages = [
     ".",
@@ -139,10 +196,10 @@
   revision = "04140366298a54a039076d798123ffa108fff46c"
 
 [[projects]]
-  name = "github.com/julienschmidt/httprouter"
-  packages = ["."]
-  revision = "8c199fb6259ffc1af525cc3ad52ee60ba8359669"
-  version = "v1.1"
+  branch = "master"
+  name = "github.com/lazywei/go-opencv"
+  packages = ["gocv"]
+  revision = "fb0a687051c795176e0698f358231f2ab1585bcb"
 
 [[projects]]
   branch = "master"
@@ -166,16 +223,58 @@
   version = "v1.7.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/nlopes/slack"
+  packages = ["."]
+  revision = "3d6ba8f6c9657a402965dba4188b452ef8623a6f"
+
+[[projects]]
   name = "github.com/pelletier/go-toml"
   packages = ["."]
   revision = "c01d1270ff3e442a8a57cddc1c92dc1138598194"
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/russross/blackfriday"
+  packages = ["."]
+  revision = "cadec560ec52d93835bf2f15bd794700d3a2473b"
+  version = "v2.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shomali11/commander"
+  packages = ["."]
+  revision = "384535f6562b1b98294d1e6db8d1d5365b79915c"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shomali11/proper"
+  packages = ["."]
+  revision = "233a9a872c306ae145fed0a7d71afc128ad78394"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shomali11/slacker"
+  packages = ["."]
+  revision = "a446a9d74017c570301ba4a9db3bc775bcea7f97"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shurcooL/sanitized_anchor_name"
+  packages = ["."]
+  revision = "86672fcb3f950f35f2e675df2240550f2a50762f"
 
 [[projects]]
   branch = "master"
@@ -245,10 +344,13 @@
 [[projects]]
   name = "go.opencensus.io"
   packages = [
+    "exporter/stackdriver/propagation",
     "exporterutil",
     "internal",
     "internal/tagencoding",
     "plugin/ocgrpc",
+    "plugin/ochttp",
+    "plugin/ochttp/propagation/b3",
     "stats",
     "stats/internal",
     "stats/view",
@@ -289,6 +391,16 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/sync"
+  packages = [
+    "errgroup",
+    "semaphore",
+    "singleflight"
+  ]
+  revision = "1d60e4601c6fd243af51cc01ddf169918a5407ca"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "9527bec2660bd847c050fda93a0f0c6dee0800bb"
@@ -321,11 +433,15 @@
     "gensupport",
     "googleapi",
     "googleapi/internal/uritemplates",
+    "googleapi/transport",
     "internal",
     "iterator",
     "option",
     "sqladmin/v1beta4",
-    "transport/grpc"
+    "support/bundler",
+    "transport",
+    "transport/grpc",
+    "transport/http"
   ]
   revision = "4d8a15a217e46f47fb724569d74702bec99852d3"
 
@@ -355,9 +471,12 @@
   packages = [
     "googleapis/api/annotations",
     "googleapis/datastore/v1",
+    "googleapis/iam/v1",
+    "googleapis/pubsub/v1",
     "googleapis/rpc/code",
     "googleapis/rpc/status",
-    "googleapis/type/latlng"
+    "googleapis/type/latlng",
+    "protobuf/field_mask"
   ]
   revision = "32ee49c4dd805befd833990acba36cb75042378c"
 
@@ -414,6 +533,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d642617174af5165edfcfb14c5a9e165daef8ffb31728914bcc1571f3f724409"
+  inputs-digest = "744ee741913303edda30875e3e05a265e48da91e4dc569ab5343df23027def46"
   solver-name = "gps-cdcl"
   solver-version = 1
