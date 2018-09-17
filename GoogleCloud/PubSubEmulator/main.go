@@ -5,12 +5,10 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"golang.org/x/net/context"
-
 	"time"
 
 	"cloud.google.com/go/pubsub"
+	"golang.org/x/net/context"
 )
 
 func main() {
