@@ -3,7 +3,6 @@ package main
 import (
 	"GoExercises/SingleFlightModified/singleflight"
 	"fmt"
-	"log"
 	"time"
 )
 
@@ -13,41 +12,34 @@ type SingleFlightGroup struct {
 
 func main() {
 	fmt.Println("Starting SingleFlightModified application")
-	//RequestFunctionsTesting()
+	var requestGroup singleflight.Group
 
 	fmt.Println("Press Ctrl + C to terminate the program")
 	fmt.Scanln()
 
 }
 
-func AddToRequestGroup(key string) {
-	value, err, _ := typ.RequestGroup.Do(key, func() (interface{}, error) {
-		go func() {
-			time.Sleep(60 * time.Second)
-			log.Println("Deleting key ", key)
-			typ.RequestGroup.Forget(key)
-		}()
+// func AddToRequestGroup(key string) {
+// 	value, err, _ := typ.RequestGroup.Do(key, func() (interface{}, error) {
+// 		go func() {
+// 			time.Sleep(60 * time.Second)
+// 			log.Println("Deleting key ", key)
+// 			typ.RequestGroup.Forget(key)
+// 		}()
 
-		return finalData, nil
-	})
+// 		return finalData, nil
+// 	})
 
-}
+// }
 
-func RequestFunctionsTesting() {
-	RequestOne(2 * time.Second)
-	RequestTwo(5 * time.Second)
-	RequestThree(10 * time.Second)
-
-}
-
-func (typ RequestOne(seconds time.Duration) string {
+func (r *SingleFlightGroup) RequestOne(seconds time.Duration) string {
 	fmt.Println("Starting RequestOne function")
 	defer DoneExecutingFunction("RequestOne Exit")
 	time.Sleep(seconds)
 	return "RequestOne -> Done"
 }
 
-func RequestTwo(seconds time.Duration) string {
+func (r *SingleFlightGroup) RequestTwo(seconds time.Duration) string {
 	fmt.Println("Starting RequestTwo function")
 	defer DoneExecutingFunction("RequestTwo Exit")
 
@@ -55,7 +47,7 @@ func RequestTwo(seconds time.Duration) string {
 	return "RequestTwo -> Done"
 }
 
-func RequestThree(seconds time.Duration) string {
+func (r *SingleFlightGroup) RequestThree(seconds time.Duration) string {
 	fmt.Println("Starting RequestTwo function")
 	defer DoneExecutingFunction("RequestThree Exit")
 
