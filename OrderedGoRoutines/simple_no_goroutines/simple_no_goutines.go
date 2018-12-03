@@ -8,44 +8,38 @@ import (
 func main() {
 	start := time.Now()
 
-	first := FirstFunc()
-	fmt.Printf("Returned : %s \n", first)
+	FirstFunc()
 
-	second := SecondFunc()
-	fmt.Printf("Returned : %s \n", second)
+	SecondFunc()
 
-	third := ThirdFunc()
-	fmt.Printf("Returned : %s \n", third)
+	ThirdFunc()
 
-	fourth := FourthFunc()
-	fmt.Printf("Returned : %s \n", fourth)
+	FourthFunc()
 
-	fmt.Println(time.Since(start))
+	fmt.Printf("Total time to finish : %s \n", time.Since(start).String())
 
 }
 
-func FirstFunc() string {
-	fmt.Println("Executing first function")
-	time.Sleep(4 * time.Second)
-	return "first"
+func FirstFunc() {
+	fmt.Println("-- Executing first function --")
+	time.Sleep(7 * time.Second)
+	fmt.Println("-- First Function finished --")
 }
 
-func SecondFunc() string {
-	fmt.Println("Executing second function")
-	time.Sleep(3 * time.Second)
-	return "second"
+func SecondFunc() {
+	fmt.Println("-- Executing second function --")
+	time.Sleep(5 * time.Second)
+	fmt.Println("-- Second Function finished --")
 }
 
-func ThirdFunc() string {
-	fmt.Println("Executing third function")
+func ThirdFunc() {
+	fmt.Println("-- Executing third function --")
 	time.Sleep(2 * time.Second)
-
-	return "third"
+	fmt.Println("-- Third Function finished --")
 }
 
-func FourthFunc() string {
-	fmt.Println("Executing fourth function")
-	time.Sleep(1 * time.Second)
-
-	return "fourth"
+func FourthFunc() {
+	fmt.Println("-- Executing fourth function --")
+	time.Sleep(10 * time.Second)
+	fmt.Println("-- Fourth Function finished --")
 }
