@@ -1,7 +1,8 @@
 .env
 ```
-export PUBSUB_EMULATOR_HOST=0.0.0.0:8085
-export GOOGLE_CLOUD_PROJECT=
+export GOOGLE_CLOUD_PROJECT=<project_name>
+export PUBSUB_EMULATOR_HOST=localhost:8085
+export PUBSUB_PROJECT_ID=<project_name>
 ```
 
 API
