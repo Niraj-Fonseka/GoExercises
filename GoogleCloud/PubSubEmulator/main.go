@@ -28,12 +28,14 @@ func main() {
 
 	const top = "email"
 	// Create a topic to subscribe to.
+
 	fmt.Println("Create a topic to subscribe to")
 	topic := cl.Topic(top)
 	ok, err := topic.Exists(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	if ok {
 		fmt.Println("Exists")
 	}
@@ -49,7 +51,7 @@ func main() {
 }
 
 func InitiatePubsubPull() {
-	fmt.Println("Initializing pubsub Pull -> Go Routine Running")
+	fmt.Println(" Spinning up a Go routine for the pubsub pull ")
 	ctx := context.Background()
 	proj := os.Getenv("GOOGLE_CLOUD_PROJECT")
 	if proj == "" {
@@ -80,6 +82,8 @@ func InitiatePubsubPull() {
 		fmt.Println("Exists")
 	}
 }
+
+//Create a subscription
 func CreateSubscription(client *pubsub.Client, topic *pubsub.Topic, ctx context.Context, subName string) {
 	sub, err := client.CreateSubscription(ctx, subName, pubsub.SubscriptionConfig{
 		Topic:       topic,
@@ -99,9 +103,6 @@ func PullMessages(client *pubsub.Client, name string, topic *pubsub.Topic) error
 	errRecv := creatingSub.Receive(cctx, func(ctx context.Context, msg *pubsub.Message) {
 		fmt.Printf("Got message: %q\n", string(msg.Data))
 		msg.Ack()
-
-		//msgString := string(msg.Data)
-
 	})
 	if errRecv != nil {
 		fmt.Println(errRecv)
@@ -109,6 +110,7 @@ func PullMessages(client *pubsub.Client, name string, topic *pubsub.Topic) error
 	return nil
 }
 
+//Publish message to topic
 func PushToTopic(message string) error {
 	fmt.Println("Push to Topic")
 	ctx := context.Background()
