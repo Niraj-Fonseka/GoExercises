@@ -1,0 +1,14 @@
+version: '3'
+services:
+  publisher:
+    # building image from ./Dockerfile
+    build: .
+    volumes:
+      - ./server:/app
+      - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
+    working_dir: /app
+    env_file:
+      - .env
+    # ports exposed to localhost
+    ports:
+      - 8080:8080
