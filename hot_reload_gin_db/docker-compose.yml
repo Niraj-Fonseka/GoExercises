@@ -1,0 +1,14 @@
+version: '3'
+services:
+  publisher:
+    # building image from ./Dockerfile
+    build: .
+    volumes:
+      - ./server:/GoExercises/hot_reload_gin_db/server
+      - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
+    working_dir: /GoExercises/hot_reload_gin_db/server
+    # env_file:
+    #   - .env
+    # ports exposed to localhost
+    ports:
+      - 8080:8080
