@@ -13,7 +13,7 @@ func main() {
 	http.HandleFunc("/hello", sayHello)
 
 	fmt.Println("Running app")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":8070", nil); err != nil {
 		panic(err)
 	}
 }
