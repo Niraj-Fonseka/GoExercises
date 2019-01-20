@@ -1,59 +1,49 @@
 package main
 
 import "fmt"
-import "time"
 
 func DepthFirstSearch(adjList map[int][]int, root int, find int) {
 
 	var Queue []int
-	var visited []int
-	fmt.Println("Root : ", root)
+	visited := make(map[int]bool)
+
 	Queue = append(Queue, root)
+	visited[root] = true
 
 	fmt.Println("Stating Loop")
 	for len(Queue) != 0 {
-		fmt.Println("Before removing the element : ", Queue)
 		dequeuedElement := Queue[0]
-		fmt.Printf("Removed element : %d \n", dequeuedElement)
 		Queue = Queue[1:len(Queue)]
-		fmt.Println("New Queue after removed : ", Queue)
 
-		visited := append(visited, dequeuedElement)
-		fmt.Printf("Visiting element : %d \n", dequeuedElement)
-		fmt.Println("List of visted : ", visited)
+		visited[dequeuedElement] = true
 
-		fmt.Println("Iterating over the children :  ", adjList[dequeuedElement])
+		fmt.Printf("Checking %d 's children \n", dequeuedElement)
+		fmt.Printf("---> Children : %v \n", adjList[dequeuedElement])
+
 		for _, child := range adjList[dequeuedElement] {
-			fmt.Printf("Child : %d \n", child)
-			fmt.Println("Before checking for visited ")
-			fmt.Println("Visisted ", visited)
 			isVisited := false
 
+			if child == find {
+				fmt.Println("Found : %d \n", find)
+				break
+			}
+
 			//check if the node is previously visited
-			for _, visitedNode := range visited {
+			for visitedNode, _ := range visited {
+
 				if child == visitedNode {
 					isVisited = true
 				}
 			}
 
 			if !isVisited {
-				visited = append(visited, child)
+				visited[child] = true
 				Queue = append(Queue, child)
 			}
 		}
-		fmt.Println()
-		time.Sleep(5 * time.Second)
 	}
-
-	// for parent, children := range adjList {
-	// 	visited = append(visited, parent)
-
-	// 	Q = append(Q, parent)
-	// 	for _, child := range children {
-	// 		//check in visitedd
-	// 	}
-	// }
-
+	fmt.Println("Visited : ")
+	fmt.Println(visited)
 }
 
 func main() {
@@ -72,6 +62,6 @@ func main() {
 	}
 
 	fmt.Println(adjList)
-	DepthFirstSearch(adjList, 0)
+	DepthFirstSearch(adjList, 0, 5)
 
 }
