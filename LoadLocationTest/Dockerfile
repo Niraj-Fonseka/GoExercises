@@ -15,6 +15,8 @@ FROM alpine:latest
 
 RUN apk add --no-cache tzdata
 
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
 WORKDIR /root/
 
 COPY --from=builder /go/src/LoadLocationTest .
