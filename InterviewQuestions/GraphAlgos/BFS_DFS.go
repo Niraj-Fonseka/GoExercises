@@ -1,6 +1,11 @@
 package main
 
 import "fmt"
+<<<<<<< Updated upstream
+=======
+
+func DepthFirstSearch(adjList map[int][]int) {
+>>>>>>> Stashed changes
 
 func DepthFirstSearch(adjList map[int][]int, root int, find int) {
 
@@ -15,6 +20,7 @@ func DepthFirstSearch(adjList map[int][]int, root int, find int) {
 		dequeuedElement := Queue[0]
 		Queue = Queue[1:len(Queue)]
 
+<<<<<<< Updated upstream
 		visited[dequeuedElement] = true
 
 		fmt.Printf("Checking %d 's children \n", dequeuedElement)
@@ -40,6 +46,12 @@ func DepthFirstSearch(adjList map[int][]int, root int, find int) {
 				visited[child] = true
 				Queue = append(Queue, child)
 			}
+=======
+		Q = append(Q, parent)
+		for _, child := range children {
+			//check in visitedd
+			fmt.Println(child)
+>>>>>>> Stashed changes
 		}
 	}
 	fmt.Println("Visited : ")
