@@ -1,1 +1,1 @@
-module hot_reloading
+module GoExercises/hot_reloading_database_gin
