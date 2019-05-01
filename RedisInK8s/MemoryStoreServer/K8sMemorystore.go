@@ -19,6 +19,76 @@ type StudentDetails struct {
 	Major     string
 }
 
+func redisHSET() {
+	fmt.Println("Running redis HGET")
+	conn := redisPool.Get()
+	defer conn.Close()
+
+	studentJD := &Student{
+		Info: &StudentDetails{
+			FirstName: "John",
+			LastName:  "Doe",
+			Major:     "CSE",
+		},
+		Rank: 1,
+	}
+
+	studentJD2 := &Student{
+		Info: &StudentDetails{
+			FirstName: "JD2",
+			LastName:  "Doe",
+			Major:     "MATH",
+		},
+		Rank: 1,
+	}
+
+	studentJD3 := &Student{
+		Info: &StudentDetails{
+			FirstName: "JD3",
+			LastName:  "Doe",
+			Major:     "SC",
+		},
+		Rank: 1,
+	}
+
+	studentJD4 := &Student{
+		Info: &StudentDetails{
+			FirstName: "JD4",
+			LastName:  "Doe",
+			Major:     "SC2",
+		},
+		Rank: 1,
+	}
+
+	bytes, err := json.Marshal(studentJD)
+
+	_, err = conn.Do("HSET", studentJD.Info.Major, studentJD.Info.FirstName, string(bytes))
+	if err != nil {
+		return
+	}
+
+	bytes2, _ := json.Marshal(studentJD2)
+
+	_, err = conn.Do("HSET", studentJD2.Info.Major, studentJD2.Info.FirstName, string(bytes2))
+	if err != nil {
+		return
+	}
+
+	bytes3, _ := json.Marshal(studentJD3)
+
+	_, err = conn.Do("HSET", studentJD3.Info.Major, studentJD3.Info.FirstName, string(bytes3))
+	if err != nil {
+		return
+	}
+
+	bytes4, _ := json.Marshal(studentJD4)
+
+	_, err = conn.Do("HSET", studentJD4.Info.Major, studentJD4.Info.FirstName, string(bytes4))
+	if err != nil {
+		return
+	}
+
+}
 func redisTestHandler() {
 	fmt.Println("Running redis test handler")
 	conn := redisPool.Get()
@@ -65,51 +135,6 @@ func redisTestHandler() {
 		}
 	}
 
-	ClearCompleteCache()
-	// time.Sleep(10 * time.Second)
-	// valuesdelete, err := redis.Values(conn.Do("SMEMBERS", "instance"))
-
-	// //delete one thing
-	// val := valuesdelete[0]
-	// var v, ok = val.([]byte)
-	// if ok {
-	// 	fmt.Println("Value to delete :--")
-	// 	deleteStudent := Student{}
-	// 	err := json.Unmarshal(v, &deleteStudent)
-	// 	if err != nil {
-	// 		fmt.Println("Error when unmarshall : ", err)
-	// 	}
-	// 	fmt.Println("Saved : ", deleteStudent)
-	// 	_, err = conn.Do("SREM", "instance", string(v))
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-
-	// }
-
-	// afterDelete, err := redis.Values(conn.Do("SMEMBERS", "instance"))
-
-	// for _, val := range afterDelete {
-	// 	var v, ok = val.([]byte)
-	// 	if ok {
-	// 		fmt.Println("Value to delete :--")
-	// 		fmt.Println(string(v))
-	// 		deleteStudent := Student{}
-	// 		err := json.Unmarshal(v, deleteStudent)
-	// 		fmt.Println("Saved : ", deleteStudent)
-	// 		_, err = conn.Do("SREM", "instance", string(v))
-	// 		if err != nil {
-	// 			fmt.Println(err)
-	// 		}
-
-	// 	}
-	// }
-
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-
 }
 
 func ClearCompleteCache() error {
@@ -139,7 +164,7 @@ func main() {
 		return redis.Dial("tcp", redisAddr)
 	}, maxConnections)
 
-	redisTestHandler()
+	redisHSET()
 	// http.HandleFunc("/redis", incrementHandler)
 	// log.Fatal(http.ListenAndServe(":7000", nil))
 }
