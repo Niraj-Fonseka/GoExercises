@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"fmt"
 )
 
@@ -11,6 +12,8 @@ type PurchaseOrder struct {
 
 func SavePO(po *PurchaseOrder, callback chan *PurchaseOrder) {
 	po.Number = 1234
+
+	time.Sleep(5 * time.Second)
 	callback <- po
 }
 
