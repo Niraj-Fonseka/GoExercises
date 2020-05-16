@@ -5,6 +5,7 @@ require (
 	github.com/edsrzf/mmap-go v0.0.0-20170320065105-0bce6a688712
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7
 	github.com/gin-gonic/gin v0.0.0-20170702092826-d459835d2b07
+	github.com/gizak/termui/v3 v3.1.0 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/gonum/blas v0.0.0-20180125090452-e7c5890b24cf
 	github.com/lazywei/go-opencv v0.0.0-20170817082532-fb0a687051c7
