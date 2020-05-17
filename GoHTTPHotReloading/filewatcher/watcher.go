@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -34,17 +35,82 @@ func main() {
 }
 
 func build() {
+
+	fmt.Println("Stopping previous")
+	killPrevious()
+
 	fmt.Println("Building")
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
 
-	cmd := exec.Command("go", "build", "-o", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/app", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/*")
+	cmd := exec.Command("go", "build", "-o", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/app", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/")
 
-	bytes, err := cmd.Output()
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+
+	fmt.Println("StdOut : ", stdout.String())
+	fmt.Println("Stderr : ", stderr.String())
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
-	fmt.Println(string(bytes))
+	fmt.Println("Running again")
+	run()
+
+}
+
+func run() {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	cmd := exec.Command("./home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/app")
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	fmt.Println("StdOut : ", stdout.String())
+	fmt.Println("Stderr : ", stderr.String())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+}
+
+func killPrevious() {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	cmd := exec.Command("ps", "aux", "|", "grep", "app", "|", "grep", "-v", "grep", "|", "awk", "'{print $2}'")
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	fmt.Println("StdOut : ", stdout.String())
+	fmt.Println("Stderr : ", stderr.String())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	var stdoutKill bytes.Buffer
+	var stderrKill bytes.Buffer
+
+	cmdKill := exec.Command("kill", "-9", stdoutKill.String())
+
+	cmd.Stdout = &stdoutKill
+	cmd.Stderr = &stderrKill
+
+	err = cmdKill.Run()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 }
 
 func Watch(fw *fsnotify.Watcher, volume string, callback func()) {
