@@ -4,46 +4,68 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
-	"github.com/fin-man/file-watcher/watcher"
 	"github.com/fsnotify/fsnotify"
 )
 
+var (
+	appPath = "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app"
+)
+
 func main() {
-	log.Println("Starting a new filewatcher ")
-	fw := watcher.NewFileWatcher()
-
-	pwd, err := os.Getwd()
-
+	fw, err := fsnotify.NewWatcher()
 	if err != nil {
 		panic(err)
 	}
-	appPath := pwd + "/app"
 
-	fw.Watch(appPath, ProcessFile)
+	// pwd, err := os.Getwd()
+
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	if _, err := os.Stat(appPath); os.IsNotExist(err) {
+		log.Println(err)
+		os.Mkdir(appPath, os.ModeDir)
+	}
+
+	Watch(fw, appPath, build)
 }
 
-func Watch(volume string, callback func(data ...interface{}) error) {
+func build() {
+	fmt.Println("Building")
+
+	cmd := exec.Command("go", "build", "-o", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/app", "/home/hungryotter/go/src/GoExercises/GoHTTPHotReloading/app/*")
+
+	bytes, err := cmd.Output()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	fmt.Println(string(bytes))
+}
+
+func Watch(fw *fsnotify.Watcher, volume string, callback func()) {
 	log.Println("Starting the watch .. ")
 	fmt.Println("watching : ", volume)
 	done := make(chan bool)
+
 	go func() {
 		for {
 			select {
-			case event, ok := <-f.Watcher.Events:
+			case event, ok := <-fw.Events:
 				if !ok {
 					return
 				}
-				if event.Op&fsnotify.Create == fsnotify.Create {
+				if event.Op&fsnotify.Write == fsnotify.Write {
 					log.Println("created file:", event.Name)
-					fileName := f.ExtractFileName(event.Name)
-					filePath := f.ExtractFilePath(event.Name)
-					err := callback(filePath, fileName) // make this get executed in a go routine with a channel
-					if err != nil {
-						log.Printf("ERROR : %v \n", err)
-					}
+
+					callback() // make this get executed in a go routine with a channel
+
 				}
-			case err, ok := <-f.Watcher.Errors:
+			case err, ok := <-fw.Errors:
 				if !ok {
 					return
 				}
@@ -52,7 +74,7 @@ func Watch(volume string, callback func(data ...interface{}) error) {
 		}
 	}()
 
-	err := f.Watcher.Add(volume)
+	err := fw.Add(volume)
 	if err != nil {
 		log.Fatal(err)
 	}
