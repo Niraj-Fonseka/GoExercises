@@ -1,18 +1,31 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"encoding/json"
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	client := fmt.Sprintf("Request From : %s , Path : %s", r.Host, r.URL.Path)
-
-	fmt.Fprintf(w, "client hostname %s!", client)
+func main() {
+	http.HandleFunc("/home", ExampleHandler)
+	if err := http.ListenAndServe(":9000", nil); err != nil {
+		panic(err)
+	}
 }
 
-func main() {
-	http.HandleFunc("/home", handler)
-	log.Fatal(http.ListenAndServe(":9000", nil))
+func ExampleHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
+	resp, _ := json.Marshal(map[string]string{
+		"ip": GetIP(r),
+	})
+	w.Write(resp)
+}
+
+// GetIP gets a requests IP address by reading off the forwarded-for
+// header (for proxies) and falls back to use the remote address.
+func GetIP(r *http.Request) string {
+	forwarded := r.Header.Get("X-FORWARDED-FOR")
+	if forwarded != "" {
+		return forwarded
+	}
+	return r.RemoteAddr
 }
